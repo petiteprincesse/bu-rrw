@@ -1,21 +1,22 @@
 import React from 'react';
 import './app.less'
-import { useDispatch, useSelector } from 'react-redux';
-import { setCount } from '../reducers/reposReducer';
+import { useDispatch } from 'react-redux';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Main from './main/Main';
+import Card from "./card/Card";
 
 const App = () => {
   const dispatch = useDispatch()
-  const count = useSelector(state => state.repos.count)
-
-  function onCountClick() {
-    dispatch(setCount(5))
-  }
 
   return (
-  <div className='app'>
-    <button onClick={() => onCountClick()}>COUNT</button>
-    <div>{count}</div>
-  </div>
+    <BrowserRouter>
+      <Routes className="container">
+        <Route exact path="/" element={<Main />} />
+        <Route path="/card/:username/:reponame" element={<Card />} />
+        <Route path="/error" element={Error} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
